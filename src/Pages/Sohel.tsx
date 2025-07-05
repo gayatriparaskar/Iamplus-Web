@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import socket from "@/socket";
 
 type Message = {
+  _id: any;
   conversationId: any;
   senderId: string;
   receiverId: string;
@@ -31,8 +32,8 @@ const SohelChatBox = ({
   const [toastMsg, setToastMsg] = useState("");
 
   const [matchedChat, setMatchedChat] = useState<any | null>(null);
-  const [contacts, setContacts] = useState<any[]>([]);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const setContacts:  any []| ((arg0: { (prevContacts: any[]): any[]; (prev: any[]): any[]; }) => void) = [] ;
+ const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
 
   const socketRef = useRef(io(BASE_URL, { forceNew: true }));
@@ -173,7 +174,7 @@ const SohelChatBox = ({
             : msg
         )
       );
-      setContacts((prevContacts) =>
+      setContacts((prevContacts: any[]) =>
         prevContacts.map((chat) =>
           chat._id === conversationId
             ? {
@@ -189,7 +190,7 @@ const SohelChatBox = ({
     });
 
     socket.on("unreadCountUpdate", ({ conversationId, unreadCount }) => {
-      setContacts((prev) =>
+      setContacts((prev: any[]) =>
         prev.map((chat) =>
           chat._id === conversationId ? { ...chat, unreadCount } : chat
         )

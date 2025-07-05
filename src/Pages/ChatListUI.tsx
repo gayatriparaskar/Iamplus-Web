@@ -17,7 +17,7 @@ const ChatList = () => {
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState<any | null>(null);
   const [notFound, setNotFound] = useState(false);
-  const [selectedUserID] = useState<string | null>(null);
+  // const [selectedUserID] = useState<string | null>(null);
   const [hasJoinedGroup, setHasJoinedGroup] = useState(false);
   // console.log(selectedUserID, "selectedUserID");
   // console.log(contacts);
@@ -56,7 +56,7 @@ const ChatList = () => {
   useEffect(() => {
     if (!user?._id || hasJoinedGroup) return;
 
-    const groupID = localStorage.getItem("groupID");
+    // const groupID = localStorage.getItem("groupID");
 
     // ✅ Socket join and listeners
     socket.emit("join", { userId: user._id });

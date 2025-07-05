@@ -9,6 +9,8 @@ const socket = io(BASE_URL,{
 });
 
 type Message = {
+  _id: any;
+  lastMessage: any;
   senderId: string;
   message: string;
   senderName?: string;
@@ -26,8 +28,8 @@ const GroupChatBox = ({
   currentUserId: string;
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [groupName, setGroupName] = useState("Group Chat");
-  const [groupStatus, setGroupStatus] = useState("No group status set");
+  const [groupName] = useState("Group Chat");
+  const [groupStatus] = useState("No group status set");
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [toastMsg, setToastMsg] = useState("");
@@ -102,7 +104,7 @@ const GroupChatBox = ({
     });
 
     // ✅ Message delivered to receiver
-    socket.on("messageDelivered", ({ messageId, to, conversationId }) => {
+    socket.on("messageDelivered", ({ messageId}) => {
       setMessages((prev) =>
         prev.map((msg) =>
           msg._id === messageId ? { ...msg, status: "delivered" } : msg
